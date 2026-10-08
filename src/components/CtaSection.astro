@@ -1,0 +1,45 @@
+---
+import { contact, whatsappHref } from '../data/site';
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+import WhatsappIcon from './WhatsappIcon.astro';
+
+interface Props {
+  /** Opening line of the WhatsApp message. */
+  message?: string;
+  eyebrow?: string;
+  title?: string;
+  text?: string;
+}
+const {
+  message = 'Bună ziua! Doresc o ofertă.',
+  eyebrow = 'Ai un proiect?',
+  title = 'Solicită o ofertă personalizată',
+  text = 'Contactează-ne pentru consultanță și o soluție adaptată nevoilor tale.',
+} = Astro.props;
+---
+<section id="contact" class="cta">
+  <div class="cta__photo"><Photo name="cta.jpg" alt="" /></div>
+  <div class="cta__shade"></div>
+  <div class="container cta__inner">
+    <div>
+      <div class="eyebrow eyebrow--bright">{eyebrow}</div>
+      <h2 class="section-title">{title}</h2>
+      <p class="cta__text">{text}</p>
+      <div class="cta__actions">
+        <a href={whatsappHref(message)} class="btn btn--wa btn--md" target="_blank" rel="noopener"><WhatsappIcon /> Solicită ofertă pe WhatsApp</a>
+        <a href="/contact/" class="btn btn--outline btn--md">Contactează-ne</a>
+      </div>
+    </div>
+    <div class="cta__contacts">
+      <a href={contact.phoneHref} class="cta__contact">
+        <span class="cta__ring"><Icon name="phone" size={18} stroke={1.7} /></span>
+        <span><span class="cta__label">Sună-ne</span><span class="cta__value">{contact.phone}</span></span>
+      </a>
+      <a href={contact.emailHref} class="cta__contact">
+        <span class="cta__icon"><Icon name="mail" size={30} stroke={1.5} /></span>
+        <span><span class="cta__label">Scrie-ne</span><span class="cta__value">{contact.email}</span></span>
+      </a>
+    </div>
+  </div>
+</section>

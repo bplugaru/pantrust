@@ -1,0 +1,43 @@
+---
+import { contact, products, productHref } from '../data/site';
+import Logo from './Logo.astro';
+
+const company = [
+  { title: 'Despre noi', href: '/despre-noi/' },
+  { title: 'Soluții', href: '/solutii/' },
+  { title: 'Portofoliu', href: '/portofoliu/' },
+  { title: 'Feedback', href: '/feedback/' },
+  { title: 'Contact', href: '/contact/' },
+];
+---
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__cols">
+      <Logo footer />
+      <div>
+        <div class="site-footer__title"><a href="/produse/">Produse</a></div>
+        <div class="site-footer__links">
+          {products.map((p) => <a href={productHref(p.id)}>{p.title}</a>)}
+        </div>
+      </div>
+      <div>
+        <div class="site-footer__title">Companie</div>
+        <div class="site-footer__links">
+          {company.map((l) => <a href={l.href}>{l.title}</a>)}
+        </div>
+      </div>
+      <div>
+        <div class="site-footer__title">Contact</div>
+        <div class="site-footer__links">
+          <a href={contact.phoneHref}>{contact.phone}</a>
+          <a href={contact.emailHref}>{contact.email}</a>
+          <a href={contact.emailAltHref}>{contact.emailAlt}</a>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer__legal">
+      <span>© 2026 Pantrust Romania. Toate drepturile rezervate.</span>
+      <span>Website realizat cu focus pe performanță și durabilitate.</span>
+    </div>
+  </div>
+</footer>

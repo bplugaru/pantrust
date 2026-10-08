@@ -1,0 +1,67 @@
+---
+import CtaSection from '../components/CtaSection.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Photo from '../components/Photo.astro';
+import { clients, quotes } from '../data/site';
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Feedback — Pantrust Romania"
+  description="Ce spun clienții despre colaborarea cu Pantrust și companiile care au construit cu panourile și structurile noastre."
+>
+  <section class="hero hero--page">
+    <div class="hero__photo"><Photo name="feedback.jpg" alt="" loading="eager" /></div>
+    <div class="hero__shade"></div>
+    <Header active="feedback" />
+    <div class="container hero__content">
+      <nav class="breadcrumb breadcrumb--light" aria-label="Breadcrumb">
+        <a href="/">Acasă</a><span>/</span><span aria-current="page">Feedback</span>
+      </nav>
+      <h1>Încredere prin <span class="accent">rezultate</span></h1>
+      <p class="hero__lead">Clienții și partenerii noștri au găsit câteva clipe pentru a descrie colaborarea cu noi.</p>
+    </div>
+  </section>
+
+  <main class="grow">
+    <section class="section section--tint">
+      <div class="container">
+        <div class="eyebrow">Ce spun clienții noștri</div>
+        <h2 class="section-title">Testimoniale</h2>
+        <div class="quote-grid">
+          {quotes.map((q) => (
+            <figure class="quote-card">
+              <div class="testimonials__mark" aria-hidden="true">“</div>
+              <blockquote>{q.text}</blockquote>
+              <figcaption><strong>{q.who}</strong><span>{q.role}</span></figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="eyebrow">Portofoliu de clienți</div>
+        <h2 class="section-title">Companii care au lucrat cu noi</h2>
+        <div class="clients">
+          <div>
+            <h3>Clienți din Iași</h3>
+            <ul>
+              {clients.iasi.map((name) => <li>{name}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h3>Clienți din alte orașe</h3>
+            <ul>
+              {clients.other.map(([name, city]) => <li>{name}<span>{city}</span></li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <CtaSection eyebrow="Următorul proiect poate fi al tău" />
+  <Footer />
+</Base>

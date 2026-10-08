@@ -1,0 +1,118 @@
+---
+import CtaSection from '../components/CtaSection.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import { reasons } from '../data/site';
+import Base from '../layouts/Base.astro';
+
+const builds = [
+  { title: 'Hale metalice', text: 'Construcții metalice de tip hală, închise cu panouri sandwich.' },
+  { title: 'Clădiri de birouri', text: 'Construcții de birouri pe structuri metalice de rezistență.' },
+  { title: 'Depozite frigorifice', text: 'Realizate cu panouri cu spumă poliuretanică, polistiren sau vată minerală.' },
+  { title: 'Compartimentări', text: 'Compartimentări de spații industriale cu panouri termoizolante.' },
+  { title: 'Închideri pentru spații industriale', text: 'Panouri sandwich pentru clădiri cu structură metalică sau din beton.' },
+];
+
+const stages = [
+  { img: 'etapa-1.jpg', title: 'Structura și livrarea', text: 'Structura metalică este ridicată, iar panourile ajung pe șantier.' },
+  { img: 'etapa-2.jpg', title: 'Montajul pereților', text: 'Primele panouri de perete se fixează pe structură.' },
+  { img: 'etapa-3.jpg', title: 'Închiderea halei', text: 'Pereții și acoperișul se închid, panou cu panou.' },
+  { img: 'etapa-4.jpg', title: 'Hala finalizată', text: 'Construcția este gata, cu accesoriile de finisaj montate.' },
+];
+---
+<Base
+  title="Despre noi — Pantrust Romania"
+  description="Pantrust oferă soluții complete pentru construcții pe structură metalică: panouri sandwich, accesorii de montaj și organizarea transportului."
+>
+  <section class="hero hero--page">
+    <div class="hero__photo"><Photo name="pf3.jpg" alt="" loading="eager" /></div>
+    <div class="hero__shade"></div>
+    <Header active="despre" />
+    <div class="container hero__content">
+      <nav class="breadcrumb breadcrumb--light" aria-label="Breadcrumb">
+        <a href="/">Acasă</a><span>/</span><span aria-current="page">Despre noi</span>
+      </nav>
+      <h1>O soluție completă, <span class="accent">orientată către client</span></h1>
+      <p class="hero__lead">Panouri sandwich, accesorii de montaj și organizarea transportului, cu ofertă și execuție rapidă.</p>
+    </div>
+  </section>
+
+  <main class="grow">
+    <section class="section">
+      <div class="container about">
+        <div>
+          <div class="eyebrow">Despre noi</div>
+          <h2 class="section-title">Cine este Pantrust</h2>
+          <p>Know-how-ul vestic însușit de administrația locală a companiei, împreună cu buna cunoaștere a mentalității și a caracteristicilor pieței românești a panourilor sandwich și a construcțiilor pe structură metalică, precum și preocuparea permanentă pentru înțelegerea și satisfacerea cerințelor clienților au făcut din Pantrust, într-un timp foarte scurt, o companie cu creștere constantă, orientată în mod prioritar către client.</p>
+          <p>Conceptul care stă la baza activității noastre este acela de a ajunge la o soluție completă. O altă idee pe care ne fundamentăm activitatea este aceea de a-i oferi clientului o soluție care răspunde cerințelor sale tehnologice și de spațiu, proiectarea și realizarea construcției fiind făcute strict după aceste necesități.</p>
+        </div>
+        <figure class="motto">
+          <div class="testimonials__mark" aria-hidden="true">“</div>
+          <blockquote>Noi punem produsul potrivit, la prețul potrivit, în fața clientului potrivit!</blockquote>
+          <ul class="checks">
+            <li><Icon name="check" size={18} />Panouri sandwich și accesorii de montaj</li>
+            <li><Icon name="check" size={18} />Organizarea transportului</li>
+            <li><Icon name="check" size={18} />Ofertă și execuție rapidă</li>
+          </ul>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section--tint">
+      <div class="container">
+        <div class="eyebrow">Ce construim</div>
+        <h2 class="section-title">Construcții după cerințele clientului</h2>
+        <p class="section-lead">Realizate conform cerințelor dimensionale și tehnologice ale fiecărui proiect.</p>
+        <ul class="builds">
+          {builds.map((b) => <li><h3>{b.title}</h3><p>{b.text}</p></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="eyebrow">Cum lucrăm</div>
+        <h2 class="section-title">De la proiect la hală</h2>
+        <div class="process">
+        <ol class="stages">
+          {stages.map((s, i) => (
+            <li>
+              <div class="stages__img"><Photo name={s.img} alt={s.title} /></div>
+              <span class="stages__no">{i + 1}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))}
+        </ol>
+        <video class="about-video" controls preload="metadata" playsinline aria-label="Pantrust: de la proiect la hală">
+          <source src="/video/de-la-proiect-la-hala.mp4" type="video/mp4" />
+        </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tint">
+      <div class="container why">
+        <div>
+          <div class="eyebrow">De ce Pantrust</div>
+          <h2 class="section-title why__title">Mai mult decât panouri sandwich</h2>
+          <p class="why__text">Oferim soluții complete, adaptate fiecărui proiect, cu focus pe calitate, durabilitate și eficiență.</p>
+        </div>
+        <div class="why__reasons">
+          {reasons.map((r) => (
+            <div class="reason">
+              <Icon name={r.icon} size={34} stroke={1.5} />
+              <h3>{r.title}</h3>
+              <p>{r.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <CtaSection />
+  <Footer />
+</Base>

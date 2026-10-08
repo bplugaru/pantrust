@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+
+interface Props {
+  img: string;
+  type: string;
+  title: string;
+  meta: string;
+}
+const { img, type, title, meta } = Astro.props;
+---
+<Photo name={img} alt="" />
+<span class="project-card__shade"></span>
+<span class="project-card__body">
+  <span>
+    <span class="project-card__type">{type}</span>
+    <span class="project-card__title">{title}</span>
+    <span class="project-card__meta">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#f2732a" stroke="#f2732a" stroke-width="1.5" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12s-8-7-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3" fill="#ffffff" stroke="none"></circle></svg>
+      {meta}
+    </span>
+  </span>
+  <span class="project-card__go"><Icon name="arrow" /></span>
+</span>

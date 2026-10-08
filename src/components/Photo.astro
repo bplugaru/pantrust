@@ -1,0 +1,18 @@
+---
+import { Image } from 'astro:assets';
+import { asset } from '../lib/assets';
+
+interface Props {
+  /** File name inside src/assets, e.g. "hero.png". */
+  name: string;
+  alt: string;
+  loading?: 'lazy' | 'eager';
+  /** Show the whole image instead of cropping it to fill the frame. */
+  contain?: boolean;
+}
+const { name, alt, loading = 'lazy', contain = false } = Astro.props;
+const src = asset(name);
+---
+{src
+  ? <Image class:list={['photo', { 'photo--contain': contain }]} src={src} alt={alt} loading={loading} />
+  : <div class="photo photo--missing" role="img" aria-label={alt}>{alt}</div>}

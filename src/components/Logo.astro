@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+
+interface Props {
+  href?: string;
+  footer?: boolean;
+}
+const { href, footer = false } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+<Tag href={href} class:list={['logo', { 'logo--footer': footer }]}>
+  <Image src={logo} alt="Pantrust" height={56} densities={[1, 2]} loading="eager" />
+</Tag>

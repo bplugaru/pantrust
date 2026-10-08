@@ -1,0 +1,70 @@
+---
+import '@fontsource-variable/figtree';
+import '../styles/global.css';
+import { company, contact } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Extra schema.org objects for this page (the organization is always included). */
+  schema?: Record<string, unknown>[];
+  noindex?: boolean;
+}
+const { title, description, schema = [], noindex = false } = Astro.props;
+
+const url = new URL(Astro.url.pathname, Astro.site);
+const image = new URL('/og.jpg', Astro.site);
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': new URL('/#organization', Astro.site).href,
+  name: 'Pantrust Romania',
+  legalName: company.name,
+  url: new URL('/', Astro.site).href,
+  logo: new URL('/apple-touch-icon.png', Astro.site).href,
+  image: image.href,
+  description: 'Panouri sandwich termoizolante, structuri metalice, tablă cutată și accesorii de montaj, cu livrare în toată România.',
+  telephone: `+${contact.whatsapp}`,
+  email: contact.email,
+  vatID: company.cui,
+  address: { '@type': 'PostalAddress', addressLocality: 'Iași', addressRegion: 'Iași', addressCountry: 'RO' },
+  areaServed: { '@type': 'Country', name: 'România' },
+};
+---
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101923" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pantrust Romania" />
+    <meta property="og:locale" content="ro_RO" />
+    <meta property="og:url" content={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Pantrust — panouri sandwich și construcții industriale" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    {[organization, ...schema].map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+  </head>
+  <body>
+    <div id="top" class="page">
+      <slot />
+    </div>
+  </body>
+</html>

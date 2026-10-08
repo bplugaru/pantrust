@@ -1,0 +1,50 @@
+---
+import CtaSection from '../../components/CtaSection.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import Icon from '../../components/Icon.astro';
+import Photo from '../../components/Photo.astro';
+import { productHref, products } from '../../data/site';
+import Base from '../../layouts/Base.astro';
+---
+<Base
+  title="Produse — Pantrust Romania"
+  description="Panouri sandwich pentru perete și acoperiș, panouri cu vată minerală, structuri metalice, tablă cutată și accesorii de montaj."
+>
+  <section class="hero hero--page">
+    <div class="hero__photo"><Photo name="pf2.jpg" alt="" loading="eager" /></div>
+    <div class="hero__shade"></div>
+    <Header active="produse" />
+    <div class="container hero__content">
+      <nav class="breadcrumb breadcrumb--light" aria-label="Breadcrumb">
+        <a href="/">Acasă</a><span>/</span><span aria-current="page">Produse</span>
+      </nav>
+      <h1>Soluții pentru orice <span class="accent">tip de construcție</span></h1>
+      <p class="hero__lead">Panouri termoizolante, structuri metalice, tablă cutată și accesorii, livrate în toată România.</p>
+    </div>
+  </section>
+
+  <main class="section section--tint grow">
+    <div class="container catalog">
+      {products.map((p) => (
+        <article class="catalog__item">
+          <a href={productHref(p.id)} class:list={['catalog__img', { 'on-black': p.dark }]} tabindex="-1" aria-hidden="true">
+            <Photo name={p.img} alt="" contain={p.dark} />
+          </a>
+          <div class="catalog__body">
+            <div class="eyebrow">{p.category}</div>
+            <h2><a href={productHref(p.id)}>{p.title}</a></h2>
+            <p>{p.intro}</p>
+            <ul class="checks">
+              {p.highlights.map((h) => <li><Icon name="check" size={16} />{h}</li>)}
+            </ul>
+            <a href={productHref(p.id)} class="catalog__more" aria-label={`Vezi detalii: ${p.title}`}>Vezi detalii <Icon name="arrow" size={14} /></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </main>
+
+  <CtaSection />
+  <Footer />
+</Base>

@@ -1,0 +1,100 @@
+---
+import { productHref, products } from '../data/site';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import Photo from './Photo.astro';
+
+interface Props {
+  active: 'none' | 'home' | 'produse' | 'portofoliu' | 'despre' | 'solutii' | 'feedback' | 'contact';
+  /** Solid navy bar; otherwise transparent, for use on top of a dark hero. */
+  solid?: boolean;
+}
+const { active, solid = false } = Astro.props;
+
+const links = [
+  { key: 'home', label: 'Acasă', href: '/' },
+  { key: 'despre', label: 'Despre noi', href: '/despre-noi/' },
+  { key: 'produse', label: 'Produse', href: '/produse/' },
+  { key: 'solutii', label: 'Soluții', href: '/solutii/' },
+  { key: 'portofoliu', label: 'Portofoliu', href: '/portofoliu/' },
+  { key: 'feedback', label: 'Feedback', href: '/feedback/' },
+  { key: 'contact', label: 'Contact', href: '/contact/' },
+];
+---
+<header class:list={['site-header', { 'site-header--solid': solid }]}>
+  <nav class="container site-nav" aria-label="Navigare principală">
+    <Logo href="/" />
+    <div id="site-menu" class="site-nav__links">
+      {links.map((l) =>
+        l.key === 'produse' ? (
+          <div class="mega" data-mega>
+            <button type="button" class:list={['mega__toggle', { 'is-current': active === 'produse' }]} aria-expanded="false" aria-controls="mega-produse">
+              {l.label} <Icon name="chevron-down" size={12} />
+            </button>
+            <div id="mega-produse" class="mega__panel" hidden>
+              <div class="mega__grid">
+                {products.map((p) => (
+                  <a href={productHref(p.id)} class="mega__item">
+                    <span class:list={['mega__img', { 'on-black': p.dark }]}><Photo name={p.img} alt="" contain={p.dark} /></span>
+                    <strong>{p.title}</strong>
+                    <span class="mega__text">{p.text}</span>
+                  </a>
+                ))}
+              </div>
+              <a href={l.href} class="more-link mega__all">Vezi toate produsele <Icon name="arrow" /></a>
+            </div>
+          </div>
+        ) : (
+          <a href={l.href} aria-current={l.key === active ? 'page' : undefined}>{l.label}</a>
+        ),
+      )}
+    </div>
+    <a href="#contact" class="btn btn--primary site-nav__cta">Solicită ofertă <Icon name="arrow" /></a>
+    <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="site-menu" aria-label="Meniu"><Icon name="menu" size={22} /></button>
+  </nav>
+</header>
+
+<script>
+  const mega = document.querySelector<HTMLElement>('[data-mega]')!;
+  const toggle = mega.querySelector<HTMLButtonElement>('.mega__toggle')!;
+  const panel = mega.querySelector<HTMLElement>('.mega__panel')!;
+  let closing: ReturnType<typeof setTimeout> | undefined;
+
+  const setOpen = (open: boolean) => {
+    clearTimeout(closing);
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+
+  toggle.addEventListener('click', () => setOpen(panel.hidden));
+  // Hover opens it for mouse users; the short delay lets the pointer cross the gap down to the panel.
+  if (matchMedia('(hover: hover)').matches) {
+    mega.addEventListener('mouseenter', () => setOpen(true));
+    mega.addEventListener('mouseleave', () => (closing = setTimeout(() => setOpen(false), 180)));
+  }
+  mega.addEventListener('focusout', (e) => {
+    if (!mega.contains(e.relatedTarget as Node | null)) setOpen(false);
+  });
+  document.addEventListener('click', (e) => {
+    if (!mega.contains(e.target as Node)) setOpen(false);
+  });
+  // Small screens: the links collapse behind a menu button.
+  const menu = document.querySelector<HTMLElement>('#site-menu')!;
+  const menuToggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]')!;
+  const setMenu = (open: boolean) => {
+    menu.toggleAttribute('data-open', open);
+    menuToggle.setAttribute('aria-expanded', String(open));
+  };
+  menuToggle.addEventListener('click', () => setMenu(!menu.hasAttribute('data-open')));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (!panel.hidden) {
+      setOpen(false);
+      toggle.focus();
+    } else if (menu.hasAttribute('data-open')) {
+      setMenu(false);
+      menuToggle.focus();
+    }
+  });
+</script>

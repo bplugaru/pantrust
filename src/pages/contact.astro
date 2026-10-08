@@ -1,0 +1,116 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import WhatsappIcon from '../components/WhatsappIcon.astro';
+import { company, contact, products, whatsappHref } from '../data/site';
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Contact — Pantrust Romania"
+  description="Cere o ofertă pentru panouri sandwich, structuri metalice și accesorii. Livrăm în toată România."
+>
+  <section class="hero hero--page">
+    <div class="hero__photo"><Photo name="cta.jpg" alt="" loading="eager" /></div>
+    <div class="hero__shade"></div>
+    <Header active="contact" />
+    <div class="container hero__content">
+      <nav class="breadcrumb breadcrumb--light" aria-label="Breadcrumb">
+        <a href="/">Acasă</a><span>/</span><span aria-current="page">Contact</span>
+      </nav>
+      <h1>Hai să vorbim despre <span class="accent">proiectul tău</span></h1>
+      <p class="hero__lead">Spune-ne ce construiești și revenim cu o ofertă și o recomandare tehnică. Livrăm în toată România.</p>
+    </div>
+  </section>
+
+  <main class="section section--tint grow">
+    <div class="container contact">
+      <div>
+        <div class="eyebrow">Informații de contact</div>
+        <h2 class="section-title">Suntem la un telefon distanță</h2>
+        <p class="contact__lead">Pentru o ofertă rapidă, pregătește dimensiunile construcției, tipul de panou și grosimea dorită.</p>
+        <div class="contact__list">
+          <a href={contact.phoneHref} class="contact__item">
+            <Icon name="phone" size={26} stroke={1.5} />
+            <span><small>Sună-ne</small><strong>{contact.phone}</strong></span>
+          </a>
+          <a href={whatsappHref('Bună ziua! Doresc o ofertă.')} class="contact__item contact__item--wa" target="_blank" rel="noopener">
+            <WhatsappIcon size={26} />
+            <span><small>WhatsApp</small><strong>Scrie-ne pe WhatsApp</strong></span>
+          </a>
+          <a href={contact.emailHref} class="contact__item">
+            <Icon name="mail" size={26} stroke={1.5} />
+            <span><small>Scrie-ne</small><strong>{contact.email}</strong></span>
+          </a>
+          <a href={contact.emailAltHref} class="contact__item">
+            <Icon name="mail" size={26} stroke={1.5} />
+            <span><small>Email alternativ</small><strong>{contact.emailAlt}</strong></span>
+          </a>
+          <div class="contact__item">
+            <Icon name="truck" size={26} stroke={1.5} />
+            <span><small>Livrare</small><strong>În toată România</strong></span>
+          </div>
+        </div>
+        <p class="company">
+          <strong>{company.name}</strong>
+          Sediu social: {company.address}<br />
+          CUI {company.cui} · Reg. Com. {company.reg}
+        </p>
+      </div>
+
+      <form id="contact" class="form" data-quote-form data-to={contact.email} data-cc={contact.emailAlt} data-whatsapp={contact.whatsapp}>
+        <h2>Solicită o ofertă</h2>
+        <label class="field">Nume
+          <input type="text" name="nume" required autocomplete="name" />
+        </label>
+        <label class="field">Telefon
+          <input type="tel" name="telefon" required autocomplete="tel" />
+        </label>
+        <label class="field field--wide">Produs
+          <select name="produs">
+            <option value="">Nu știu încă / mai multe produse</option>
+            {products.map((p) => <option value={p.id}>{p.title}</option>)}
+          </select>
+        </label>
+        <label class="field field--wide">Detalii despre proiect
+          <textarea name="mesaj" required placeholder="Dimensiuni, grosime, localitate, termen dorit…"></textarea>
+        </label>
+        <div class="form__foot">
+          <button type="submit" class="btn btn--wa btn--md" data-channel="whatsapp"><WhatsappIcon /> Trimite pe WhatsApp</button>
+          <button type="submit" class="btn btn--light btn--md" data-channel="email">Trimite pe email</button>
+          <p>Mesajul se deschide gata completat în WhatsApp sau în aplicația ta de email; îl trimiți tu de acolo.</p>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-quote-form]')!;
+  const product = form.elements.namedItem('produs') as HTMLSelectElement;
+
+  // Product pages link here with ?produs=<id> so the request starts on the right product.
+  const wanted = new URLSearchParams(location.search).get('produs');
+  if (wanted && [...product.options].some((o) => o.value === wanted)) product.value = wanted;
+
+  // There is no backend: the request is handed over as a pre-filled WhatsApp or email message.
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const productName = product.value ? product.selectedOptions[0].text : '';
+    const lines = [`Nume: ${data.get('nume')}`, `Telefon: ${data.get('telefon')}`];
+    if (productName) lines.push(`Produs: ${productName}`);
+    const body = [...lines, '', data.get('mesaj')].join('\n');
+
+    if (e.submitter?.dataset.channel === 'email') {
+      const subject = productName ? `Cerere ofertă — ${productName}` : 'Cerere ofertă';
+      location.href = `mailto:${form.dataset.to}?cc=${form.dataset.cc}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    } else {
+      const text = `Bună ziua! Doresc o ofertă.\n\n${body}`;
+      window.open(`https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+    }
+  });
+</script>

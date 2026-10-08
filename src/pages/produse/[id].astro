@@ -1,0 +1,237 @@
+---
+import CtaSection from '../../components/CtaSection.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import Icon from '../../components/Icon.astro';
+import Photo from '../../components/Photo.astro';
+import WhatsappIcon from '../../components/WhatsappIcon.astro';
+import { productHref, products, standardColors, whatsappHref, type Product } from '../../data/site';
+import Base from '../../layouts/Base.astro';
+import { asset } from '../../lib/assets';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { id: p.id }, props: { p } }));
+}
+
+interface Props {
+  p: Product;
+}
+const { p } = Astro.props;
+const others = products.filter((x) => x.id !== p.id);
+const variants = p.variants ?? [];
+const pageUrl = new URL(productHref(p.id), Astro.site).href;
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: p.title,
+    description: p.intro,
+    category: p.category,
+    url: pageUrl,
+    image: asset(p.img) ? new URL(asset(p.img)!.src, Astro.site).href : undefined,
+    brand: { '@type': 'Brand', name: 'Pantrust' },
+    additionalProperty: p.specs.map((s) => ({ '@type': 'PropertyValue', name: s.k, value: s.v })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [['Acasă', '/'], ['Produse', '/produse/'], [p.title, productHref(p.id)]].map(([name, path], i) => ({
+      '@type': 'ListItem', position: i + 1, name, item: new URL(path, Astro.site).href,
+    })),
+  },
+];
+const offerMessage = `Bună ziua! Doresc o ofertă pentru ${p.short}.`;
+
+const num = (n: number, digits = 2) => n.toLocaleString('ro-RO', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+---
+<Base title={`${p.title} — Pantrust Romania`} description={p.intro} schema={schema}>
+  <Header active="produse" solid />
+
+  <main class="grow">
+    <section class="section--tint">
+      <div class="container product-hero">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Acasă</a><span>/</span><a href="/produse/">Produse</a><span>/</span><span aria-current="page">{p.title}</span>
+        </nav>
+        <div class="product-hero__grid">
+          <div class:list={['product-hero__img', { 'on-black': p.dark }]}><Photo name={p.img} alt={p.title} loading="eager" contain={p.dark} /></div>
+          <div>
+            <div class="eyebrow">{p.category}</div>
+            <h1>{p.title}</h1>
+            <p class="product-hero__intro">{p.intro}</p>
+            <ul class="checks">
+              {p.highlights.map((h) => <li><Icon name="check" size={18} />{h}</li>)}
+            </ul>
+            <div class="product-hero__actions">
+              <a href={whatsappHref(offerMessage)} class="btn btn--wa btn--xl" target="_blank" rel="noopener"><WhatsappIcon /> Cere ofertă pe WhatsApp</a>
+              <a href={variants.length ? '#date-tehnice' : '#specificatii'} class="btn btn--light btn--xl">Specificații tehnice</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {variants.length > 0 && (
+      <section id="date-tehnice" class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Date tehnice</div>
+              <h2 class="section-title section-title--sm">{variants.length > 1 ? 'Variante și caracteristici' : 'Caracteristici tehnice'}</h2>
+            </div>
+            {variants.length > 1 && (
+              <nav class="chips" aria-label="Variante">
+                {variants.map((v) => <a href={`#${v.id}`}>{v.title}</a>)}
+              </nav>
+            )}
+          </div>
+          <div class="variants">
+            {variants.map((v) => (
+              <article id={v.id} class="variant">
+                <div class="variant__side">
+                  <div class="variant__img on-black"><Photo name={v.img} alt={`${p.title} — ${v.title}`} contain /></div>
+                  <h3>{v.title}</h3>
+                  <dl class="variant__facts">
+                    <div><dt>Lățime utilă</dt><dd>{v.widths.join(' / ')} mm</dd></div>
+                    <div><dt>Conductivitate termică (λ)</dt><dd>{num(v.lambda)} W/mK</dd></div>
+                    <div>
+                      <dt>Grosimi disponibile</dt>
+                      <dd class="sizes">{v.rows.map(([mm]) => <span>{mm} mm</span>)}</dd>
+                    </div>
+                  </dl>
+                  {asset(v.sheet) && (
+                    <a href={asset(v.sheet)!.src} class="sheet-link" target="_blank" rel="noopener">
+                      Fișă tehnică cu profile și detalii de îmbinare <Icon name="arrow" />
+                    </a>
+                  )}
+                  {variants.length > 1 && (
+                    <a href={whatsappHref(`Bună ziua! Doresc o ofertă pentru ${v.offer}.`)} class="btn btn--wa variant__offer" target="_blank" rel="noopener">
+                      <WhatsappIcon /> Cere ofertă pentru această variantă
+                    </a>
+                  )}
+                </div>
+                <div class="variant__data">
+                  <div class="table-wrap">
+                    <table class="data-table">
+                      <caption class="sr-only">{p.title}, {v.title}: greutate și performanță termică pe grosimi</caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">Grosime<small>mm</small></th>
+                          <th scope="col">Greutate*<small>kg/m²</small></th>
+                          <th scope="col">Transfer termic (U)<small>W/m²K</small></th>
+                          <th scope="col">Rezistență termică (R)<small>m²K/W</small></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {v.rows.map(([mm, kg, u, r]) => (
+                          <tr><th scope="row">{mm}</th><td>{num(kg)}</td><td>{num(u)}</td><td>{num(r)}</td></tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="specs__note">* La calculul greutății s-a luat în considerare grosimea tablei de {num(v.facings[0])} mm la fața exterioară și {num(v.facings[1])} mm la fața interioară.</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {p.figure && (
+      <section class="section">
+        <div class="container">
+          <div class="eyebrow">Date tehnice</div>
+          <h2 class="section-title section-title--sm">Profile și dimensiuni</h2>
+          <figure class="wide-figure on-black">
+            <Photo name={p.figure.img} alt={p.figure.alt} contain />
+            <figcaption>{p.figure.caption}</figcaption>
+          </figure>
+        </div>
+      </section>
+    )}
+
+    <section id="specificatii" class:list={['section', { 'section--tint': variants.length > 0 || p.figure }]}>
+      <div class="container specs">
+        <div>
+          <div class="eyebrow">{variants.length ? 'Pe scurt' : 'Date tehnice'}</div>
+          <h2 class="section-title section-title--sm">Specificații</h2>
+          <dl class="facts facts--specs">
+            {p.specs.map((s) => <div><dt>{s.k}</dt><dd>{s.v}</dd></div>)}
+          </dl>
+          <p class="specs__note">Valorile pot varia în funcție de furnizor și configurație. Fișa tehnică completă se transmite odată cu oferta.</p>
+        </div>
+        <div>
+          <div class="eyebrow">Utilizări</div>
+          <h2 class="section-title section-title--sm">Unde se folosește</h2>
+          <ul class="uses">
+            {p.uses.map((u) => <li>{u}</li>)}
+          </ul>
+          {p.notes && (
+            <>
+              <h3 class="notes__title">Bine de știut</h3>
+              <ul class="notes">
+                {p.notes.map((n) => <li>{n}</li>)}
+              </ul>
+            </>
+          )}
+          {variants.length === 0 && (
+            <div class="datasheet">
+              <div>
+                <div class="datasheet__title">Fișă tehnică</div>
+                <div class="datasheet__text">Dimensiuni, profile și detalii de montaj, la cerere</div>
+              </div>
+              <a href="#contact">Solicită <Icon name="arrow" /></a>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    {p.colors && (
+      <section class="section">
+        <div class="container">
+          <div class="eyebrow">Finisaje</div>
+          <h2 class="section-title section-title--sm">Culori standard</h2>
+          <ul class="swatches">
+            {standardColors.map(([name, hex]) => (
+              <li><span style={`background:${hex}`}></span>{name}</li>
+            ))}
+          </ul>
+          <p class="specs__note">Alte culori pot fi disponibile la cerere. Nuanțele afișate pe ecran sunt orientative.</p>
+        </div>
+      </section>
+    )}
+
+    <section class="section section--tint">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Produsele noastre</div>
+            <h2 class="section-title section-title--sm">Alte produse</h2>
+          </div>
+          <a href="/produse/" class="more-link">Vezi toate produsele <Icon name="arrow" /></a>
+        </div>
+        <div class="other-grid">
+          {others.map((o) => (
+            <a href={productHref(o.id)} class="product-card product-card--link">
+              <div class:list={['product-card__img', { 'on-black': o.dark }]}><Photo name={o.img} alt="" contain={o.dark} /></div>
+              <div class="product-card__row">
+                <span>{o.title}</span>
+                <Icon name="arrow" />
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <CtaSection
+      message={offerMessage}
+      title={`Solicită o ofertă pentru ${p.short}`}
+      text="Trimite-ne dimensiunile proiectului și revenim cu o ofertă și o recomandare tehnică."
+    />
+  </main>
+
+  <Footer />
+</Base>

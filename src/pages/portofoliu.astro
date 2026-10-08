@@ -1,0 +1,110 @@
+---
+import CtaSection from '../components/CtaSection.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { productHref, products, projectCategories, projects } from '../data/site';
+import Base from '../layouts/Base.astro';
+
+const productTitle = (id: string) => products.find((p) => p.id === id)!.title;
+---
+<Base
+  title="Portofoliu — Pantrust Romania"
+  description="Hale logistice, spații de producție, showroom-uri și clădiri agricole, construite cu panourile și structurile Pantrust."
+>
+  <section class="hero hero--page">
+    <div class="hero__photo"><Photo name="hero.png" alt="" loading="eager" /></div>
+    <div class="hero__shade"></div>
+    <Header active="portofoliu" />
+    <div class="container hero__content">
+      <nav class="breadcrumb breadcrumb--light" aria-label="Breadcrumb">
+        <a href="/">Acasă</a><span>/</span><span aria-current="page">Portofoliu</span>
+      </nav>
+      <h1>Proiecte realizate în <span class="accent">toată România</span></h1>
+      <p class="hero__lead">Hale logistice, spații de producție, showroom-uri și clădiri agricole, construite cu panourile și structurile noastre.</p>
+    </div>
+  </section>
+
+  <main class="section--tint grow">
+    <div class="container portfolio">
+      <div class="portfolio__bar">
+        <div class="filters">
+          {['Toate', ...projectCategories].map((c) => (
+            <button type="button" class="filter" data-filter={c} aria-pressed={c === 'Toate' ? 'true' : 'false'}>{c}</button>
+          ))}
+        </div>
+        <span class="portfolio__count" data-count aria-live="polite">{projects.length} proiecte</span>
+      </div>
+      <div class="project-grid">
+        {projects.map((pr) => (
+          <button type="button" class="project-card" data-cat={pr.cat} data-open={pr.id}>
+            <ProjectCard img={pr.img} type={pr.type} title={pr.title} meta={`${pr.place} · ${pr.year}`} />
+          </button>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <CtaSection eyebrow="Următorul proiect poate fi al tău" />
+  <Footer />
+
+  <dialog class="project-dialog" data-dialog aria-label="Detalii proiect">
+    {projects.map((pr) => (
+      <div class="project-detail" data-detail={pr.id} hidden>
+        <div class="project-detail__img"><Photo name={pr.img} alt={pr.title} /></div>
+        <div class="project-detail__body">
+          <button type="button" class="round-btn project-detail__close" data-close aria-label="Închide"><Icon name="close" /></button>
+          <div class="eyebrow">{pr.type}</div>
+          <h2>{pr.title}</h2>
+          <p>{pr.desc}</p>
+          <dl class="facts">
+            <div><dt>Locație</dt><dd>{pr.place}</dd></div>
+            <div><dt>An</dt><dd>{pr.year}</dd></div>
+            <div><dt>Suprafață</dt><dd>{pr.area}</dd></div>
+            <div><dt>Durată execuție</dt><dd>{pr.dur}</dd></div>
+          </dl>
+          <div class="chips">
+            {pr.prods.map((id) => <a href={productHref(id)}>{productTitle(id)}</a>)}
+          </div>
+          <a href="#contact" class="btn btn--primary project-detail__cta" data-close>Vreau un proiect similar <Icon name="arrow" /></a>
+        </div>
+      </div>
+    ))}
+  </dialog>
+</Base>
+
+<script>
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-cat]')];
+  const filters = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+  const count = document.querySelector<HTMLElement>('[data-count]')!;
+
+  filters.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.filter;
+      filters.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      let visible = 0;
+      cards.forEach((card) => {
+        card.hidden = cat !== 'Toate' && card.dataset.cat !== cat;
+        if (!card.hidden) visible++;
+      });
+      count.textContent = `${visible} ${visible === 1 ? 'proiect' : 'proiecte'}`;
+    }),
+  );
+
+  const dialog = document.querySelector<HTMLDialogElement>('[data-dialog]')!;
+  const details = [...dialog.querySelectorAll<HTMLElement>('[data-detail]')];
+
+  cards.forEach((card) =>
+    card.addEventListener('click', () => {
+      details.forEach((d) => (d.hidden = d.dataset.detail !== card.dataset.open));
+      dialog.showModal();
+    }),
+  );
+  dialog.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    // The dialog has no padding, so a click on the element itself is a click on the backdrop.
+    if (target === dialog || target.closest('[data-close]')) dialog.close();
+  });
+</script>

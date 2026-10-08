@@ -1,0 +1,21 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Icon from '../components/Icon.astro';
+import Base from '../layouts/Base.astro';
+---
+<Base title="Pagina nu a fost găsită — Pantrust Romania" description="Pagina căutată nu există sau a fost mutată." noindex>
+  <Header active="none" solid />
+  <main class="section section--tint grow not-found">
+    <div class="container">
+      <div class="eyebrow">Eroare 404</div>
+      <h1 class="section-title">Pagina nu a fost găsită</h1>
+      <p class="section-lead">Adresa nu există sau a fost mutată. Poți continua de aici:</p>
+      <div class="hero__actions">
+        <a href="/" class="btn btn--primary btn--md">Înapoi acasă <Icon name="arrow" /></a>
+        <a href="/produse/" class="btn btn--light btn--md">Vezi produsele</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>
