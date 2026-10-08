@@ -35,7 +35,7 @@ const schema = [
   {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: [['Acasă', '/'], ['Produse', '/produse/'], [p.title, productHref(p.id)]].map(([name, path], i) => ({
+    itemListElement: [['Acasă', '/'], ['Produse', '/produse'], [p.title, productHref(p.id)]].map(([name, path], i) => ({
       '@type': 'ListItem', position: i + 1, name, item: new URL(path, Astro.site).href,
     })),
   },
@@ -51,7 +51,7 @@ const num = (n: number, digits = 2) => n.toLocaleString('ro-RO', { minimumFracti
     <section class="section--tint">
       <div class="container product-hero">
         <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="/">Acasă</a><span>/</span><a href="/produse/">Produse</a><span>/</span><span aria-current="page">{p.title}</span>
+          <a href="/">Acasă</a><span>/</span><a href="/produse">Produse</a><span>/</span><span aria-current="page">{p.title}</span>
         </nav>
         <div class="product-hero__grid">
           <div class:list={['product-hero__img', { 'on-tile': p.cutout }]}><Photo name={p.img} alt={p.title} loading="eager" contain={p.cutout} /></div>
@@ -210,7 +210,7 @@ const num = (n: number, digits = 2) => n.toLocaleString('ro-RO', { minimumFracti
             <div class="eyebrow">Produsele noastre</div>
             <h2 class="section-title section-title--sm">Alte produse</h2>
           </div>
-          <a href="/produse/" class="more-link">Vezi toate produsele <Icon name="arrow" /></a>
+          <a href="/produse" class="more-link">Vezi toate produsele <Icon name="arrow" /></a>
         </div>
         <div class="other-grid">
           {others.map((o) => (

@@ -6,4 +6,10 @@ const site =
   process.env.SITE_URL ??
   (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://www.pantrustromania.ro');
 
-export default defineConfig({ site });
+export default defineConfig({
+  site,
+  // URLs without a trailing slash: /produse/perete. Pages are built as perete.html and
+  // vercel.json (cleanUrls) serves them without the extension.
+  trailingSlash: 'never',
+  build: { format: 'file' },
+});

@@ -1,0 +1,43 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import terms from '../data/termeni.json';
+import Base from '../layouts/Base.astro';
+
+// The text is Pantrust's general terms of sale, reproduced exactly as supplied.
+const sentenceCase = (s: string) => s.charAt(0) + s.slice(1).toLocaleLowerCase('ro');
+---
+<Base title="Termeni și condiții — Pantrust Romania" description="Condițiile generale de vânzare Pantrust Management SRL: preț, plată, livrare, recepție, garanții și răspundere.">
+  <Header active="none" solid />
+
+  <main class="section section--tint grow">
+    <div class="container legal">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Acasă</a><span>/</span><span aria-current="page">Termeni și condiții</span>
+      </nav>
+      <h1>Termeni și condiții</h1>
+      <p class="legal__sub">Condiții generale de vânzare</p>
+
+      <div class="legal__layout">
+        <nav class="legal__toc" aria-label="Cuprins">
+          <ol>
+            {terms.articles.map((a) => <li><a href={`#art-${a.no}`}>{sentenceCase(a.title)}</a></li>)}
+          </ol>
+        </nav>
+
+        <div class="legal__body">
+          {terms.intro.map((p) => <p class="legal__intro">{p}</p>)}
+          {terms.articles.map((a) => (
+            <section id={`art-${a.no}`}>
+              <h2><span>Art. {a.no}</span> {sentenceCase(a.title)}</h2>
+              {a.clauses.map((c) => <p><strong>{c.no}.</strong> {c.text}</p>)}
+            </section>
+          ))}
+          {terms.closing.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>

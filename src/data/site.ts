@@ -148,16 +148,6 @@ export const products: Product[] = [
     ],
   },
   {
-    // Photo: Pawel Czerwinski on Unsplash (unsplash.com/photos/uALiohJZ4xw), Unsplash License.
-    id: 'tabla', img: 'tabla.jpg', category: 'Tablă', title: 'Tablă cutată', short: 'tablă cutată',
-    text: 'Profile pentru acoperișuri și fațade, diverse finisaje.',
-    intro: 'Panouri din tablă cutată de oțel, galvanizată și vopsită electrostatic, pentru acoperișuri și fațade. Se debitează la orice lungime, la cererea beneficiarului.',
-    highlights: ['Lățime utilă de 1000 mm', 'Debitare la orice lungime', 'Disponibilă și din aluminiu sau doar galvanizată'],
-    specs: [{ k: 'Material', v: 'Tablă de oțel, 0,50 – 0,60 mm' }, { k: 'Profil', v: '4 cute, înălțimea cutei 35 mm' }, { k: 'Lățime utilă', v: '1000 mm' }, { k: 'Lungime', v: 'Orice lungime, la cerere' }, { k: 'Acoperire galvanică', v: '275 g/m² (Z275)' }, { k: 'Vopsire', v: 'Exterior: 5 µ epoxi-primer + 20 µ vopsea poliesterică; interior: 7 – 10 µ epoxi-primer' }, { k: 'Culori standard', v: 'RAL 5010, RAL 9002, RAL 9006' }],
-    uses: ['Acoperișuri', 'Fațade'],
-    notes: ['Accesoriile (coamă, subcoamă, profile de închidere, profile „Z”) se livrează din același tip de tablă și în aceleași culori.'],
-  },
-  {
     id: 'accesorii', img: 'accesorii.png', cutout: true, category: 'Accesorii', title: 'Accesorii', short: 'accesorii',
     text: 'Elemente de finisaj și prindere, pentru un montaj complet.',
     intro: 'Tot ce trebuie pentru un montaj complet și etanș: profile de finisaj, elemente pluviale, șuruburi autoforante și garnituri.',
@@ -176,7 +166,7 @@ export const standardColors = [
   ['RAL 3000', '#a72920'], ['RAL 3009', '#6d342d'], ['RAL 5010', '#004f7c'], ['RAL 6005', '#114232'],
 ] as const;
 
-export const productHref = (id: string) => `/produse/${id}/`;
+export const productHref = (id: string) => `/produse/${id}`;
 
 export const projectCategories = ['Hale logistice', 'Producție', 'Comercial', 'Agricol'] as const;
 
@@ -200,10 +190,10 @@ export const projects: Project[] = [
   { id: 3, cat: 'Comercial', type: 'Spațiu comercial', title: 'Showroom și depozit', place: 'Cluj-Napoca', year: 2025, img: 'pf3.jpg', area: '3.200 m²', dur: '3 luni', prods: ['structuri', 'perete', 'acoperis'], desc: 'Showroom cu fațadă vitrată generoasă și depozit adiacent, închis cu panouri de perete cu prindere ascunsă.' },
   { id: 4, cat: 'Hale logistice', type: 'Depozit frigorific', title: 'Depozit frigorific', place: 'Constanța', year: 2024, img: 'hero.png', area: '8.100 m²', dur: '5 luni', prods: ['perete', 'acoperis', 'accesorii'], desc: 'Depozit cu camere frigorifice, panouri PIR de 150 mm și etanșare completă pentru menținerea temperaturii.' },
   { id: 5, cat: 'Producție', type: 'Spațiu de producție', title: 'Fabrică componente auto', place: 'Brașov', year: 2023, img: 'pf1.png', area: '9.500 m²', dur: '6 luni', prods: ['structuri', 'vata', 'acoperis'], desc: 'Hală industrială cu pod rulant și compartimentări antifoc între zonele de producție.' },
-  { id: 6, cat: 'Agricol', type: 'Clădire agricolă', title: 'Depozit cereale și utilaje', place: 'Timiș', year: 2024, img: 'testi.jpg', area: '2.600 m²', dur: '2 luni', prods: ['structuri', 'tabla'], desc: 'Construcție agricolă cu structură metalică ușoară și închideri din tablă cutată.' },
+  { id: 6, cat: 'Agricol', type: 'Clădire agricolă', title: 'Depozit cereale și utilaje', place: 'Timiș', year: 2024, img: 'testi.jpg', area: '2.600 m²', dur: '2 luni', prods: ['structuri', 'acoperis'], desc: 'Construcție agricolă cu structură metalică ușoară și închideri din panouri sandwich.' },
   { id: 7, cat: 'Comercial', type: 'Spațiu comercial', title: 'Centru comercial de proximitate', place: 'Oradea', year: 2023, img: 'pf3.jpg', area: '4.300 m²', dur: '4 luni', prods: ['perete', 'acoperis', 'accesorii'], desc: 'Clădire comercială cu fațade din panouri de perete în două culori și acoperiș termoizolant.' },
   { id: 8, cat: 'Producție', type: 'Atelier', title: 'Atelier prelucrări metalice', place: 'Pitești', year: 2025, img: 'pf2.jpg', area: '1.900 m²', dur: '2 luni', prods: ['perete', 'acoperis'], desc: 'Atelier cu birouri integrate, închis complet cu panouri sandwich și accesorii de finisaj asortate.' },
-  { id: 9, cat: 'Agricol', type: 'Fermă', title: 'Fermă zootehnică', place: 'Suceava', year: 2023, img: 'hero.png', area: '3.700 m²', dur: '3 luni', prods: ['acoperis', 'tabla', 'accesorii'], desc: 'Adăpost pentru animale cu acoperiș din panouri sandwich, pentru confort termic pe tot parcursul anului.' },
+  { id: 9, cat: 'Agricol', type: 'Fermă', title: 'Fermă zootehnică', place: 'Suceava', year: 2023, img: 'hero.png', area: '3.700 m²', dur: '3 luni', prods: ['acoperis', 'accesorii'], desc: 'Adăpost pentru animale cu acoperiș din panouri sandwich, pentru confort termic pe tot parcursul anului.' },
 ];
 
 // Client feedback published on pantrustromania.ro (spelling and diacritics tidied, the third one shortened).
@@ -245,7 +235,7 @@ export const solutions = [
   { title: 'Hale industriale și logistice', img: 'pf3.jpg', text: 'Structură metalică și închideri complete din panouri sandwich, pentru depozite, centre logistice și hale de producție.', prods: ['structuri', 'perete', 'acoperis', 'accesorii'] },
   { title: 'Hale de producție și ateliere', img: 'pf2.jpg', text: 'Construcții realizate după cerințele dimensionale și tehnologice ale fluxului tău de producție.', prods: ['structuri', 'perete', 'acoperis'] },
   { title: 'Depozite frigorifice', img: 'cta.jpg', text: 'Închideri cu panouri termoizolante cu spumă poliuretanică sau vată minerală, pentru spații cu temperatură controlată.', prods: ['perete', 'acoperis', 'vata'] },
-  { title: 'Construcții agricole și zootehnice', img: 'testi.jpg', text: 'Grajduri, crescătorii, ateliere de reparații și depozite, cu structuri ușoare și învelitori rezistente.', prods: ['structuri', 'acoperis', 'tabla'] },
+  { title: 'Construcții agricole și zootehnice', img: 'testi.jpg', text: 'Grajduri, crescătorii, ateliere de reparații și depozite, cu structuri ușoare și învelitori rezistente.', prods: ['structuri', 'acoperis'] },
   { title: 'Birouri și spații comerciale', img: 'hero.png', text: 'Clădiri de birouri și spații comerciale pe structură metalică, cu fațade din panouri cu prindere ascunsă.', prods: ['structuri', 'perete', 'accesorii'] },
   { title: 'Compartimentări și pereți antifoc', img: 'vata-perete-normala.png', cutout: true, text: 'Compartimentări de spații industriale cu panouri termoizolante și panouri cu vată minerală, acolo unde contează comportarea la foc.', prods: ['vata', 'perete'] },
 ];

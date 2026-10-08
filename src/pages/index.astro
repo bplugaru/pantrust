@@ -45,7 +45,7 @@ import Base from '../layouts/Base.astro';
             <div class="eyebrow">Produsele noastre</div>
             <h2 class="section-title">Soluții pentru orice tip de construcție</h2>
           </div>
-          <a href="/produse/" class="more-link">Vezi toate produsele <Icon name="arrow" /></a>
+          <a href="/produse" class="more-link">Vezi toate produsele <Icon name="arrow" /></a>
         </div>
         <div class="product-grid">
           {products.map((p) => (
@@ -69,11 +69,11 @@ import Base from '../layouts/Base.astro';
             <div class="eyebrow">Portofoliu</div>
             <h2 class="section-title">Proiecte realizate în toată România</h2>
           </div>
-          <a href="/portofoliu/" class="more-link">Vezi toate proiectele <Icon name="arrow" /></a>
+          <a href="/portofoliu" class="more-link">Vezi toate proiectele <Icon name="arrow" /></a>
         </div>
         <div class="project-grid project-grid--fit">
           {projects.slice(0, 3).map((pr) => (
-            <a href="/portofoliu/" class="project-card">
+            <a href="/portofoliu" class="project-card">
               <ProjectCard img={pr.img} type={pr.type} title={pr.title} meta={pr.place} />
             </a>
           ))}
@@ -111,7 +111,7 @@ import Base from '../layouts/Base.astro';
             <button type="button" class="round-btn" data-dir="1" aria-label="Următor"><Icon name="chevron-right" /></button>
             <span class="testimonials__count" data-count>1 / {quotes.length}</span>
           </div>
-          <a href="/feedback/" class="more-link testimonials__all">Vezi toate părerile <Icon name="arrow" /></a>
+          <a href="/feedback" class="more-link testimonials__all">Vezi toate părerile <Icon name="arrow" /></a>
         </div>
         <div class="testimonials__quotes">
           {quotes.map((q, i) => (

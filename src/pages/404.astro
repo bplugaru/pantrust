@@ -2,20 +2,43 @@
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import { productHref, products } from '../data/site';
 import Base from '../layouts/Base.astro';
 ---
 <Base title="Pagina nu a fost găsită — Pantrust Romania" description="Pagina căutată nu există sau a fost mutată." noindex>
-  <Header active="none" solid />
-  <main class="section section--tint grow not-found">
-    <div class="container">
-      <div class="eyebrow">Eroare 404</div>
-      <h1 class="section-title">Pagina nu a fost găsită</h1>
-      <p class="section-lead">Adresa nu există sau a fost mutată. Poți continua de aici:</p>
+  <section class="hero hero--page hero--404">
+    <div class="hero__photo"><Photo name="hero.png" alt="" loading="eager" /></div>
+    <div class="hero__shade"></div>
+    <Header active="none" />
+    <div class="container hero__content">
+      <div class="eyebrow eyebrow--bright">Eroare 404</div>
+      <h1>Pagina nu a fost <span class="accent">găsită</span></h1>
+      <p class="hero__lead">Adresa nu există sau a fost mutată. Poți continua de aici:</p>
       <div class="hero__actions">
-        <a href="/" class="btn btn--primary btn--md">Înapoi acasă <Icon name="arrow" /></a>
-        <a href="/produse/" class="btn btn--light btn--md">Vezi produsele</a>
+        <a href="/" class="btn btn--primary btn--lg">Înapoi acasă <Icon name="arrow" size={18} /></a>
+        <a href="/contact" class="btn btn--outline btn--lg">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="section section--tint grow">
+    <div class="container">
+      <div class="eyebrow">Poate căutai</div>
+      <h2 class="section-title">Produsele noastre</h2>
+      <div class="other-grid not-found__grid">
+        {products.map((p) => (
+          <a href={productHref(p.id)} class="product-card product-card--link">
+            <div class:list={['product-card__img', { 'on-tile': p.cutout }]}><Photo name={p.img} alt="" contain={p.cutout} /></div>
+            <div class="product-card__row">
+              <span>{p.title}</span>
+              <Icon name="arrow" />
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </main>
+
   <Footer />
 </Base>

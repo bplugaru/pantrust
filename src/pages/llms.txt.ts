@@ -14,7 +14,7 @@ export const GET: APIRoute = ({ site }) => {
 
   const text = `# Pantrust Romania
 
-> Pantrust furnizează panouri sandwich termoizolante (PUR/PIR și vată minerală), structuri metalice ușoare, tablă cutată și accesorii de montaj pentru construcții industriale, cu livrare în toată România. Oferă soluția completă: consultanță, panouri, structură, accesorii și organizarea transportului.
+> Pantrust furnizează panouri sandwich termoizolante (PUR/PIR și vată minerală), structuri metalice ușoare și accesorii de montaj pentru construcții industriale, cu livrare în toată România. Oferă soluția completă: consultanță, panouri, structură, accesorii și organizarea transportului.
 
 Firma: ${company.name}, Iași, România (CUI ${company.cui}). Limba site-ului: română.
 Contact: telefon și WhatsApp ${contact.phone}, email ${contact.email}.
@@ -30,12 +30,13 @@ ${solutions.map((s) => `- ${s.title}: ${s.text} Produse folosite: ${s.prods.map(
 
 ## Pagini
 
-- [Toate produsele](${link('/produse/')}): prezentarea celor șase categorii de produse
-- [Soluții](${link('/solutii/')}): ce include o soluție completă și ce produse se folosesc pe tip de clădire
-- [Portofoliu](${link('/portofoliu/')}): exemple de proiecte
-- [Despre noi](${link('/despre-noi/')}): cine este Pantrust și cum se ajunge de la proiect la hală
-- [Feedback](${link('/feedback/')}): testimoniale și lista de clienți
-- [Contact](${link('/contact/')}): cerere de ofertă prin WhatsApp, telefon sau email
+- [Toate produsele](${link('/produse')}): prezentarea tuturor categoriilor de produse
+- [Soluții](${link('/solutii')}): ce include o soluție completă și ce produse se folosesc pe tip de clădire
+- [Portofoliu](${link('/portofoliu')}): exemple de proiecte
+- [Despre noi](${link('/despre-noi')}): cine este Pantrust și cum se ajunge de la proiect la hală
+- [Feedback](${link('/feedback')}): testimoniale și lista de clienți
+- [Contact](${link('/contact')}): cerere de ofertă prin WhatsApp, telefon sau email
+- [Termeni și condiții](${link('/termeni-si-conditii')}): condițiile generale de vânzare
 `;
   return new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };

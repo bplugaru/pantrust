@@ -3,11 +3,11 @@ import { contact, products, productHref } from '../data/site';
 import Logo from './Logo.astro';
 
 const company = [
-  { title: 'Despre noi', href: '/despre-noi/' },
-  { title: 'Soluții', href: '/solutii/' },
-  { title: 'Portofoliu', href: '/portofoliu/' },
-  { title: 'Feedback', href: '/feedback/' },
-  { title: 'Contact', href: '/contact/' },
+  { title: 'Despre noi', href: '/despre-noi' },
+  { title: 'Soluții', href: '/solutii' },
+  { title: 'Portofoliu', href: '/portofoliu' },
+  { title: 'Feedback', href: '/feedback' },
+  { title: 'Contact', href: '/contact' },
 ];
 ---
 <footer class="site-footer">
@@ -15,7 +15,7 @@ const company = [
     <div class="site-footer__cols">
       <Logo footer />
       <div>
-        <div class="site-footer__title"><a href="/produse/">Produse</a></div>
+        <div class="site-footer__title"><a href="/produse">Produse</a></div>
         <div class="site-footer__links">
           {products.map((p) => <a href={productHref(p.id)}>{p.title}</a>)}
         </div>
@@ -37,7 +37,7 @@ const company = [
     </div>
     <div class="site-footer__legal">
       <span>© 2026 Pantrust Romania. Toate drepturile rezervate.</span>
-      <span>Website realizat cu focus pe performanță și durabilitate.</span>
+      <a href="/termeni-si-conditii">Termeni și condiții</a>
     </div>
   </div>
 </footer>

@@ -12,7 +12,9 @@ interface Props {
 }
 const { title, description, schema = [], noindex = false } = Astro.props;
 
-const url = new URL(Astro.url.pathname, Astro.site);
+// Public address of this page: no .html extension and no trailing slash (the home page stays "/").
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/').replace(/(.)\/$/, '$1');
+const url = new URL(path, Astro.site);
 const image = new URL('/og.jpg', Astro.site);
 const organization = {
   '@context': 'https://schema.org',
@@ -23,7 +25,7 @@ const organization = {
   url: new URL('/', Astro.site).href,
   logo: new URL('/apple-touch-icon.png', Astro.site).href,
   image: image.href,
-  description: 'Panouri sandwich termoizolante, structuri metalice, tablă cutată și accesorii de montaj, cu livrare în toată România.',
+  description: 'Panouri sandwich termoizolante, structuri metalice și accesorii de montaj, cu livrare în toată România.',
   telephone: `+${contact.whatsapp}`,
   email: contact.email,
   vatID: company.cui,
