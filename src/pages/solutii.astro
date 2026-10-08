@@ -70,7 +70,7 @@ const advantages = [
         <div class="solutions">
           {solutions.map((s) => (
             <article class="solution">
-              <div class:list={['solution__img', { 'on-black': s.dark }]}><Photo name={s.img} alt="" contain={s.dark} /></div>
+              <div class:list={['solution__img', { 'on-tile': s.cutout }]}><Photo name={s.img} alt="" contain={s.cutout} /></div>
               <div class="solution__body">
                 <h3>{s.title}</h3>
                 <p>{s.text}</p>

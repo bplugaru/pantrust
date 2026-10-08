@@ -35,7 +35,7 @@ const links = [
               <div class="mega__grid">
                 {products.map((p) => (
                   <a href={productHref(p.id)} class="mega__item">
-                    <span class:list={['mega__img', { 'on-black': p.dark }]}><Photo name={p.img} alt="" contain={p.dark} /></span>
+                    <span class:list={['mega__img', { 'on-tile': p.cutout }]}><Photo name={p.img} alt="" contain={p.cutout} /></span>
                     <strong>{p.title}</strong>
                     <span class="mega__text">{p.text}</span>
                   </a>

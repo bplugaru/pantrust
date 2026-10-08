@@ -50,7 +50,7 @@ import Base from '../layouts/Base.astro';
         <div class="product-grid">
           {products.map((p) => (
             <article class="product-card">
-              <div class:list={['product-card__img', { 'on-black': p.dark }]}><Photo name={p.img} alt={p.title} contain={p.dark} /></div>
+              <div class:list={['product-card__img', { 'on-tile': p.cutout }]}><Photo name={p.img} alt={p.title} contain={p.cutout} /></div>
               <div class="product-card__body">
                 <h3>{p.title}</h3>
                 <p>{p.text}</p>

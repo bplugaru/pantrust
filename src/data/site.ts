@@ -41,8 +41,8 @@ export type Variant = {
 export type Product = {
   id: string;
   img: string;
-  /** Render on a black background: shown whole instead of cropped to fill. */
-  dark?: boolean;
+  /** Cut-out render on a transparent background: shown whole on a light tile instead of cropped to fill. */
+  cutout?: boolean;
   category: string;
   title: string;
   short: string;
@@ -71,7 +71,7 @@ const rows = (table: Record<number, [number, number]>, weights: Record<number, n
 
 export const products: Product[] = [
   {
-    id: 'perete', img: 'perete-normala.jpg', dark: true, category: 'Panouri sandwich PUR/PIR', title: 'Panouri sandwich perete', short: 'panouri de perete',
+    id: 'perete', img: 'perete-normala.png', cutout: true, category: 'Panouri sandwich PUR/PIR', title: 'Panouri sandwich perete', short: 'panouri de perete',
     text: 'Soluții eficiente pentru fațade și compartimentări.',
     intro: 'Panouri termoizolante cu miez din spumă poliuretanică PUR/PIR, pentru fațade și compartimentări interioare. Se montează rapid pe structură metalică și oferă izolare termică excelentă, cu un aspect curat al fațadei.',
     highlights: ['Prindere normală sau ascunsă', 'Lățimi utile de 1000, 1100 și 1180 mm', 'Grosimi de la 40 la 200 mm'],
@@ -86,14 +86,14 @@ export const products: Product[] = [
     uses: ['Hale industriale', 'Depozite logistice', 'Spații comerciale', 'Compartimentări'],
     colors: true,
     variants: [
-      { id: 'prindere-normala', title: 'Prindere normală', offer: 'panouri de perete cu prindere normală', img: 'perete-normala.jpg', sheet: 'fisa-perete-normala.jpg', widths: [1000, 1100, 1180], lambda: 0.02, facings: [0.5, 0.4],
+      { id: 'prindere-normala', title: 'Prindere normală', offer: 'panouri de perete cu prindere normală', img: 'perete-normala.png', sheet: 'fisa-perete-normala.jpg', widths: [1000, 1100, 1180], lambda: 0.02, facings: [0.5, 0.4],
         rows: rows(PUR_U_R, { 40: 9.23, 50: 9.63, 60: 10.03, 80: 10.83, 100: 11.63, 120: 12.43, 150: 13.63, 160: 14.03, 180: 14.83, 200: 15.63 }) },
-      { id: 'prindere-ascunsa', title: 'Prindere ascunsă', offer: 'panouri de perete cu prindere ascunsă', img: 'perete-ascunsa.jpg', sheet: 'fisa-perete-ascunsa.jpg', widths: [1000, 1100], lambda: 0.02, facings: [0.5, 0.4],
+      { id: 'prindere-ascunsa', title: 'Prindere ascunsă', offer: 'panouri de perete cu prindere ascunsă', img: 'perete-ascunsa.png', sheet: 'fisa-perete-ascunsa.jpg', widths: [1000, 1100], lambda: 0.02, facings: [0.5, 0.4],
         rows: rows(PUR_U_R, { 40: 9.78, 50: 10.18, 60: 10.58, 80: 11.38, 100: 12.18, 120: 12.98, 150: 14.18, 200: 16.18 }) },
     ],
   },
   {
-    id: 'acoperis', img: 'acoperis.jpg', dark: true, category: 'Panouri sandwich PUR/PIR', title: 'Panouri sandwich acoperiș', short: 'panouri de acoperiș',
+    id: 'acoperis', img: 'acoperis.png', cutout: true, category: 'Panouri sandwich PUR/PIR', title: 'Panouri sandwich acoperiș', short: 'panouri de acoperiș',
     text: 'Rezistență și izolație pentru orice tip de proiect.',
     intro: 'Panouri cu profil trapezoidal și miez din spumă poliuretanică PUR/PIR, pentru acoperișuri. O singură soluție pentru învelitoare și izolație, cu îmbinare etanșă între panouri.',
     highlights: ['Profil trapezoidal, lățime utilă de 1000 sau 1100 mm', 'Grosimi de la 30 la 200 mm', 'Fixare cu holșurub autoperforant și calotă cu garnitură'],
@@ -107,12 +107,12 @@ export const products: Product[] = [
     uses: ['Hale de producție', 'Depozite', 'Ferme și spații agricole', 'Clădiri comerciale'],
     colors: true,
     variants: [
-      { id: 'date-tehnice', title: 'Panou de acoperiș PUR/PIR', offer: 'panouri de acoperiș', img: 'acoperis.jpg', sheet: 'fisa-acoperis.jpg', widths: [1000, 1100], lambda: 0.02, facings: [0.5, 0.4],
+      { id: 'date-tehnice', title: 'Panou de acoperiș PUR/PIR', offer: 'panouri de acoperiș', img: 'acoperis.png', sheet: 'fisa-acoperis.jpg', widths: [1000, 1100], lambda: 0.02, facings: [0.5, 0.4],
         rows: rows(PUR_U_R, { 30: 9.38, 40: 9.78, 50: 10.18, 60: 10.58, 80: 11.38, 100: 12.18, 120: 12.98, 150: 14.18, 200: 16.18 }, { 40: [0.54, 1.85] }) },
     ],
   },
   {
-    id: 'vata', img: 'vata-perete-normala.jpg', dark: true, category: 'Panouri sandwich cu vată minerală', title: 'Panouri cu vată minerală', short: 'panouri cu vată minerală',
+    id: 'vata', img: 'vata-perete-normala.png', cutout: true, category: 'Panouri sandwich cu vată minerală', title: 'Panouri cu vată minerală', short: 'panouri cu vată minerală',
     text: 'Protecție sporită pentru cerințe speciale de siguranță.',
     intro: 'Panouri cu miez din vată minerală bazaltică, pentru proiecte cu cerințe ridicate de rezistență la foc și izolare fonică. Disponibile pentru perete, cu prindere normală sau ascunsă, și pentru acoperiș.',
     highlights: ['Pentru perete și acoperiș', 'Prindere normală sau ascunsă la perete', 'Grosimi de la 60 la 200 mm'],
@@ -126,11 +126,11 @@ export const products: Product[] = [
     uses: ['Pereți antifoc', 'Industria alimentară', 'Depozite', 'Centre comerciale'],
     colors: true,
     variants: [
-      { id: 'perete-prindere-normala', title: 'Perete, prindere normală', offer: 'panouri de perete cu vată minerală, cu prindere normală', img: 'vata-perete-normala.jpg', sheet: 'fisa-vata-perete-normala.jpg', widths: [1000, 1100, 1180], lambda: 0.04, facings: [0.6, 0.5],
+      { id: 'perete-prindere-normala', title: 'Perete, prindere normală', offer: 'panouri de perete cu vată minerală, cu prindere normală', img: 'vata-perete-normala.png', sheet: 'fisa-vata-perete-normala.jpg', widths: [1000, 1100, 1180], lambda: 0.04, facings: [0.6, 0.5],
         rows: rows(WOOL_U_R, { 60: 15.72, 80: 17.72, 100: 19.72, 120: 21.72, 150: 24.72, 200: 29.72 }) },
-      { id: 'perete-prindere-ascunsa', title: 'Perete, prindere ascunsă', offer: 'panouri de perete cu vată minerală, cu prindere ascunsă', img: 'vata-perete-ascunsa.jpg', sheet: 'fisa-vata-perete-ascunsa.jpg', widths: [1000, 1100], lambda: 0.04, facings: [0.6, 0.5],
+      { id: 'perete-prindere-ascunsa', title: 'Perete, prindere ascunsă', offer: 'panouri de perete cu vată minerală, cu prindere ascunsă', img: 'vata-perete-ascunsa.png', sheet: 'fisa-vata-perete-ascunsa.jpg', widths: [1000, 1100], lambda: 0.04, facings: [0.6, 0.5],
         rows: rows(WOOL_U_R, { 60: 16.11, 80: 18.11, 100: 20.11, 120: 22.11, 150: 25.11, 200: 30.11 }) },
-      { id: 'acoperis', title: 'Acoperiș', offer: 'panouri de acoperiș cu vată minerală', img: 'vata-acoperis.jpg', sheet: 'fisa-vata-acoperis.jpg', widths: [1000, 1100], lambda: 0.04, facings: [0.6, 0.5],
+      { id: 'acoperis', title: 'Acoperiș', offer: 'panouri de acoperiș cu vată minerală', img: 'vata-acoperis.png', sheet: 'fisa-vata-acoperis.jpg', widths: [1000, 1100], lambda: 0.04, facings: [0.6, 0.5],
         rows: rows(WOOL_U_R, { 60: 16.49, 80: 18.49, 100: 20.49, 120: 22.49, 150: 25.49, 200: 30.49 }) },
     ],
   },
@@ -148,7 +148,8 @@ export const products: Product[] = [
     ],
   },
   {
-    id: 'tabla', img: 'p5.png', category: 'Tablă', title: 'Tablă cutată', short: 'tablă cutată',
+    // Photo: Pawel Czerwinski on Unsplash (unsplash.com/photos/uALiohJZ4xw), Unsplash License.
+    id: 'tabla', img: 'tabla.jpg', category: 'Tablă', title: 'Tablă cutată', short: 'tablă cutată',
     text: 'Profile pentru acoperișuri și fațade, diverse finisaje.',
     intro: 'Panouri din tablă cutată de oțel, galvanizată și vopsită electrostatic, pentru acoperișuri și fațade. Se debitează la orice lungime, la cererea beneficiarului.',
     highlights: ['Lățime utilă de 1000 mm', 'Debitare la orice lungime', 'Disponibilă și din aluminiu sau doar galvanizată'],
@@ -157,13 +158,13 @@ export const products: Product[] = [
     notes: ['Accesoriile (coamă, subcoamă, profile de închidere, profile „Z”) se livrează din același tip de tablă și în aceleași culori.'],
   },
   {
-    id: 'accesorii', img: 'accesorii.jpg', dark: true, category: 'Accesorii', title: 'Accesorii', short: 'accesorii',
+    id: 'accesorii', img: 'accesorii.png', cutout: true, category: 'Accesorii', title: 'Accesorii', short: 'accesorii',
     text: 'Elemente de finisaj și prindere, pentru un montaj complet.',
     intro: 'Tot ce trebuie pentru un montaj complet și etanș: profile de finisaj, elemente pluviale, șuruburi autoforante și garnituri.',
     highlights: ['Același tip de tablă și aceleași culori ca panourile', 'Lungime standard de 2000 mm', 'Profile la comandă, după proiectul tău'],
     specs: [{ k: 'Profile standard', v: 'Coamă, subcoamă, colțar exterior, profile de închidere pentru colțuri, laterale și fronton, profil „Z”' }, { k: 'Pluviale', v: 'Jgheab, burlan pătrat' }, { k: 'Lungime', v: '2000 mm' }, { k: 'Material', v: 'Tablă galvanizată sau galvanizată și vopsită electrostatic, 0,50 – 0,60 mm' }, { k: 'Prindere', v: 'Holșuruburi autoperforante cu șaibă și garnitură EPDM, calote cu garnitură' }, { k: 'La comandă', v: 'Profile după proiectul solicitantului' }],
     uses: ['Finisaje fațadă', 'Coame și dolii', 'Ancadramente', 'Etanșări'],
-    figure: { img: 'accesorii-profile.jpg', alt: 'Secțiuni cotate: coamă, colțar exterior, burlan pătrat, profil „Z”, jgheab și profil închidere fronton', caption: 'Profile standard și dimensiunile lor, în mm.' },
+    figure: { img: 'accesorii-profile.png', alt: 'Secțiuni cotate: coamă, colțar exterior, burlan pătrat, profil „Z”, jgheab și profil închidere fronton', caption: 'Profile standard și dimensiunile lor, în mm.' },
   },
 ];
 
@@ -246,5 +247,5 @@ export const solutions = [
   { title: 'Depozite frigorifice', img: 'cta.jpg', text: 'Închideri cu panouri termoizolante cu spumă poliuretanică sau vată minerală, pentru spații cu temperatură controlată.', prods: ['perete', 'acoperis', 'vata'] },
   { title: 'Construcții agricole și zootehnice', img: 'testi.jpg', text: 'Grajduri, crescătorii, ateliere de reparații și depozite, cu structuri ușoare și învelitori rezistente.', prods: ['structuri', 'acoperis', 'tabla'] },
   { title: 'Birouri și spații comerciale', img: 'hero.png', text: 'Clădiri de birouri și spații comerciale pe structură metalică, cu fațade din panouri cu prindere ascunsă.', prods: ['structuri', 'perete', 'accesorii'] },
-  { title: 'Compartimentări și pereți antifoc', img: 'vata-perete-normala.jpg', dark: true, text: 'Compartimentări de spații industriale cu panouri termoizolante și panouri cu vată minerală, acolo unde contează comportarea la foc.', prods: ['vata', 'perete'] },
+  { title: 'Compartimentări și pereți antifoc', img: 'vata-perete-normala.png', cutout: true, text: 'Compartimentări de spații industriale cu panouri termoizolante și panouri cu vată minerală, acolo unde contează comportarea la foc.', prods: ['vata', 'perete'] },
 ];

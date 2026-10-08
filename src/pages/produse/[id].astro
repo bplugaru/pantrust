@@ -54,7 +54,7 @@ const num = (n: number, digits = 2) => n.toLocaleString('ro-RO', { minimumFracti
           <a href="/">Acasă</a><span>/</span><a href="/produse/">Produse</a><span>/</span><span aria-current="page">{p.title}</span>
         </nav>
         <div class="product-hero__grid">
-          <div class:list={['product-hero__img', { 'on-black': p.dark }]}><Photo name={p.img} alt={p.title} loading="eager" contain={p.dark} /></div>
+          <div class:list={['product-hero__img', { 'on-tile': p.cutout }]}><Photo name={p.img} alt={p.title} loading="eager" contain={p.cutout} /></div>
           <div>
             <div class="eyebrow">{p.category}</div>
             <h1>{p.title}</h1>
@@ -89,7 +89,7 @@ const num = (n: number, digits = 2) => n.toLocaleString('ro-RO', { minimumFracti
             {variants.map((v) => (
               <article id={v.id} class="variant">
                 <div class="variant__side">
-                  <div class="variant__img on-black"><Photo name={v.img} alt={`${p.title} — ${v.title}`} contain /></div>
+                  <div class="variant__img on-tile"><Photo name={v.img} alt={`${p.title} — ${v.title}`} contain /></div>
                   <h3>{v.title}</h3>
                   <dl class="variant__facts">
                     <div><dt>Lățime utilă</dt><dd>{v.widths.join(' / ')} mm</dd></div>
@@ -143,7 +143,7 @@ const num = (n: number, digits = 2) => n.toLocaleString('ro-RO', { minimumFracti
         <div class="container">
           <div class="eyebrow">Date tehnice</div>
           <h2 class="section-title section-title--sm">Profile și dimensiuni</h2>
-          <figure class="wide-figure on-black">
+          <figure class="wide-figure on-tile">
             <Photo name={p.figure.img} alt={p.figure.alt} contain />
             <figcaption>{p.figure.caption}</figcaption>
           </figure>
@@ -215,7 +215,7 @@ const num = (n: number, digits = 2) => n.toLocaleString('ro-RO', { minimumFracti
         <div class="other-grid">
           {others.map((o) => (
             <a href={productHref(o.id)} class="product-card product-card--link">
-              <div class:list={['product-card__img', { 'on-black': o.dark }]}><Photo name={o.img} alt="" contain={o.dark} /></div>
+              <div class:list={['product-card__img', { 'on-tile': o.cutout }]}><Photo name={o.img} alt="" contain={o.cutout} /></div>
               <div class="product-card__row">
                 <span>{o.title}</span>
                 <Icon name="arrow" />

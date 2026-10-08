@@ -28,8 +28,8 @@ import Base from '../../layouts/Base.astro';
     <div class="container catalog">
       {products.map((p) => (
         <article class="catalog__item">
-          <a href={productHref(p.id)} class:list={['catalog__img', { 'on-black': p.dark }]} tabindex="-1" aria-hidden="true">
-            <Photo name={p.img} alt="" contain={p.dark} />
+          <a href={productHref(p.id)} class:list={['catalog__img', { 'on-tile': p.cutout }]} tabindex="-1" aria-hidden="true">
+            <Photo name={p.img} alt="" contain={p.cutout} />
           </a>
           <div class="catalog__body">
             <div class="eyebrow">{p.category}</div>
